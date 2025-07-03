@@ -11,7 +11,7 @@
 1. Клонируйте репозиторий:
    ```bash
    git clone https://github.com/Putopu3m/Python_CSV_parser.git
-   cd csv-processor
+   cd Python_CSV_parser
    ```
 
 2. Создайте виртуальное окружение (опционально):
