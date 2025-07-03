@@ -89,7 +89,7 @@ python source/main.py --filename products.csv --order_by "rating=desc"
 python source/main.py --filename products.csv --where "brand=xiaomi" --order_by "price=desc"
 ```
 
-## ✅ Поддерживаемые функции агрегации
+## Поддерживаемые функции агрегации
 
 - `sum` — сумма
 - `min` — минимум
@@ -97,7 +97,7 @@ python source/main.py --filename products.csv --where "brand=xiaomi" --order_by 
 - `avg` — среднее
 - `median` — медиана
 
-## 🧪 Тестирование
+## Тестирование
 
 Для запуска тестов:
 
