@@ -45,6 +45,9 @@ def filter_data(data: List[List[str]], condition: str) -> List[List[str]]:
 
     if not re.match(r'^[0-9a-zA-Z]', value):
         raise ValueError("Please enter valid comparison sign")
+    
+    if all(list(map(lambda x: not is_number(x), [row[header_index] for row in data[1:]]))) and is_number(value):
+        raise ValueError("Comparing value must be text for the given column")
 
     filtered: List[List[str]] = []
     value: float | str = float(value) if is_number(value) else value 
@@ -60,29 +63,14 @@ def filter_data(data: List[List[str]], condition: str) -> List[List[str]]:
     return [data[0]] + deepcopy(filtered)
 
 
-def aggregate_data(data: List[List[str]], expr: str) -> List[List[str]]:
-    header, func = expr.split('=')
-    header_index: int = data[0].index(header)
-
-    funcs: dict[str, Callable[[List[float]], float]] = {
-        'sum': sum,
-        'min': min,
-        'max': max,
-        'avg': statistics.mean,
-        'median': statistics.median
-    }
-
-    values: List[float] = [float(row[header_index]) for row in data[1:]]
-    result: float = round(funcs[func](values), 2)
-
-    return [[func], [result]]
-
-
 def sort_data(data: List[List[str]], expr: str) -> List[List[str]]:
     if '=' in expr:
         header, order = expr.split('=')
     else:
         header, order = expr, 'asc'
+
+    if header not in data[0]:
+        raise ValueError(f"Incorrect condition: {header}")
 
     if order not in ['asc', 'desc']:
         raise ValueError("Ordering should be in ascending or descending order")
@@ -99,6 +87,32 @@ def sort_data(data: List[List[str]], expr: str) -> List[List[str]]:
     )
 
     return [data[0]] + sorted_rows
+
+
+def aggregate_data(data: List[List[str]], expr: str) -> List[List[str]]:
+    try:
+        header, func = expr.split('=')
+    except ValueError:
+        print(f"Incorrect condition in aggregation")
+        return
+    
+    header_index: int = data[0].index(header)
+
+    funcs: dict[str, Callable[[List[float]], float]] = {
+        'sum': sum,
+        'min': min,
+        'max': max,
+        'avg': statistics.mean,
+        'median': statistics.median
+    }
+
+    if func not in list(funcs.keys()):
+        raise ValueError("Unknown aggregation function was provided")
+
+    values: List[float] = [float(row[header_index]) for row in data[1:]]
+    result: float = round(funcs[func](values), 2)
+
+    return [[func], [result]]
 
 
 def main():
