@@ -104,5 +104,3 @@ python source/main.py --filename products.csv --where "brand=xiaomi" --order_by 
 ```bash
 pytest tests/test_csv_parsing.py
 ```
-
-Покрытие составляет 80%. 
