@@ -102,7 +102,7 @@ python source/main.py --filename products.csv --where "brand=xiaomi" --order_by 
 Для запуска тестов:
 
 ```bash
-pytest pytest tests/test_csv_parsing.py
+pytest tests/test_csv_parsing.py
 ```
 
 Покрытие составляет 80%. 
