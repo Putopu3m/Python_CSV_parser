@@ -37,9 +37,9 @@
    ```
 
 ## Запуск скрипта
-
+Шаблон команды запуска:
 ```bash
-python source/main.py --filename example.csv [--where "column>value"] [--order_by "column=asc|desc"] [--aggregate "column=func"]
+python source/main.py --filename example.csv [--where "column>|<|=|>=|<=|<>value"] [--order_by "column=asc|desc"] [--aggregate "column=func"]
 ```
 
 Аргументы можно комбинировать. Порядок обработки:
